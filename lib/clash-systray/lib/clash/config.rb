@@ -1,0 +1,27 @@
+# frozen_string_literal: true
+
+module ClashSystray
+  module Clash
+    class Config
+      attr_reader :port, :socks_port
+      attr_reader :external_controller, :secret
+      attr_reader :proxy_groups
+
+      def self.load(file)
+        new.tap { |c| c.parse(file) }
+      end
+
+      def parse(file)
+        data = YAML.load_file(file)
+
+        %w[
+          port socks_port
+          external_controller secret
+          proxy_groups
+        ].each do |key|
+          instance_variable_set("@#{key}", data[key.tr("_", "-")])
+        end
+      end
+    end
+  end
+end
