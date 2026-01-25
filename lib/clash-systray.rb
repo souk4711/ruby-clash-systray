@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "yaml"
+require "http"
 require "rubsh"
 require "qt6/qtwidgets"
 
