@@ -35,6 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "http", "~> 5.0.0"
   spec.add_dependency "ruby-sh", "~> 3.0.0"
   spec.add_dependency "ruby-qt6-qtwidgets", "~> 2.0.0"
+  spec.add_dependency "ruby-qt6-qtwebenginewidgets", "~> 2.0.0"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html

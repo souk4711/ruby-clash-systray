@@ -3,6 +3,7 @@
 module ClashSystray
   class Systray < RubyQt6::Bando::QWidget
     q_object do
+      slot "perform_open_dashboard_action()"
       slot "perform_export_env_action()"
     end
 
@@ -21,12 +22,15 @@ module ClashSystray
     private
 
     def create_actions
+      @open_dashboard_action = QAction.new("Dashboard", self)
+      @open_dashboard_action.triggered.connect(self, :perform_open_dashboard_action)
+
       create_selector_actions
 
-      @export_env_action = QAction.new(QIcon.from_theme(QIcon::ThemeIcon::DocumentPrint), "Export Env", self)
+      @export_env_action = QAction.new("Export Env", self)
       @export_env_action.triggered.connect(self, :perform_export_env_action)
 
-      @quit_action = QAction.new(QIcon.from_theme(QIcon::ThemeIcon::ApplicationExit), "Quit", self)
+      @quit_action = QAction.new("Quit", self)
       @quit_action.triggered.connect($qApp, :quit)
     end
 
@@ -54,6 +58,7 @@ module ClashSystray
 
     def create_menus
       @menu = QMenu.new("", self)
+      @menu.add_action(@open_dashboard_action)
 
       @menu.add_separator
       @selector_actions_data.each do |selector_action_data|
@@ -83,6 +88,11 @@ module ClashSystray
 
     def perform_export_env_action
       action = ExportEnvAction.new
+      action.perform
+    end
+
+    def perform_open_dashboard_action
+      action = OpenDashboardAction.new
       action.perform
     end
   end
