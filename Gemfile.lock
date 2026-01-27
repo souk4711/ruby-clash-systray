@@ -32,7 +32,6 @@ PATH
       http (~> 5.0.0)
       ruby-qt6-qtwebenginewidgets (~> 2.0.0)
       ruby-qt6-qtwidgets (~> 2.0.0)
-      ruby-sh (~> 3.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -151,7 +150,6 @@ GEM
       ruby-qt6-qtwebenginecore (~> 2.0.0)
       ruby-qt6-qtwidgets (~> 2.0.0)
       ruby-qt6-rice (= 2.0.0)
-    ruby-sh (3.0.0)
     solargraph (0.58.1)
       ast (~> 2.4.3)
       backport (~> 1.2)

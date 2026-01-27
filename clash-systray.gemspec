@@ -33,7 +33,6 @@ Gem::Specification.new do |spec|
   # Uncomment to register a new dependency of your gem
   spec.add_dependency "base64"
   spec.add_dependency "http", "~> 5.0.0"
-  spec.add_dependency "ruby-sh", "~> 3.0.0"
   spec.add_dependency "ruby-qt6-qtwidgets", "~> 2.0.0"
   spec.add_dependency "ruby-qt6-qtwebenginewidgets", "~> 2.0.0"
 
