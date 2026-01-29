@@ -13,6 +13,8 @@ module ClashSystray
     end
 
     def initialize
+      QApplication.set_application_name("ClashSystray")
+
       @app = QApplication.new
       @systray = Systray.new
     end
