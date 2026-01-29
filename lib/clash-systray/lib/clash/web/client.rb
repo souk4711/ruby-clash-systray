@@ -8,7 +8,7 @@ module ClashSystray
 
         attr_reader :secret
 
-        def_delegators :@http, :get
+        def_delegators :@http, :get, :put
 
         def initialize(options)
           @secret = options.fetch(:secret)

@@ -5,15 +5,6 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in clash-systray.gemspec
 gemspec
 
-# ruby-qt6
-%w[
-  rice
-  qtcore qtgui qtwidgets qtnetwork
-  qtwebenginecore qtwebenginewidgets
-].each do |lib|
-  gem "ruby-qt6-#{lib}", path: "../ruby-qt6/#{lib}"
-end
-
 # rake
 gem "irb"
 gem "rake", "~> 13.0"

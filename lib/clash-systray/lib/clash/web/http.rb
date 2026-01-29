@@ -9,7 +9,7 @@ module ClashSystray
         end
 
         def initialize(client, options)
-          super()
+          super($qApp)
 
           @client = client
           @host = options.fetch(:host)
@@ -32,22 +32,35 @@ module ClashSystray
           @on_reply_success[reply._qobject_ptr] = options[:on_success]
         end
 
+        def put(path, options = {})
+          url = QUrl.new("http://#{@host}:#{@port}#{path}")
+
+          request = QNetworkRequest.new
+          request.set_url(url)
+          request.set_raw_header("Authorization", "Bearer #{@client.secret}")
+
+          data = QByteArray.new(options[:json].to_json)
+          reply = @manager.put(request, data)
+          @on_reply_success[reply._qobject_ptr] = options[:on_success]
+        end
+
         private
 
         def set_url_query(url, params)
           return if params.nil?
 
           query = QUrlQuery.new
-          params.each { |k, v| query.add_query_item(k.to_qstr, v) }
+          params.each { |k, v| query.add_query_item(k.to_qstr, v.to_s) }
           url.set_query(query)
         end
 
         def on_reply_finished(reply)
           on_success = @on_reply_success.delete(reply._qobject_ptr)
-          return unless reply.error == QNetworkReply::NoError
+          return if reply.error != QNetworkReply::NoError
 
           body = reply.read_all.to_s
-          on_success.call(JSON.parse(body))
+          data = body.empty? ? body : JSON.parse(body)
+          on_success.call(data)
         ensure
           reply.delete_later
         end

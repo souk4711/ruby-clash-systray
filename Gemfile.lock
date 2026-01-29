@@ -1,55 +1,4 @@
 PATH
-  remote: ../ruby-qt6/qtcore
-  specs:
-    ruby-qt6-qtcore (2.0.0)
-      ruby-qt6-rice (= 2.0.0)
-
-PATH
-  remote: ../ruby-qt6/qtgui
-  specs:
-    ruby-qt6-qtgui (2.0.0)
-      ruby-qt6-qtcore (~> 2.0.0)
-      ruby-qt6-rice (= 2.0.0)
-
-PATH
-  remote: ../ruby-qt6/qtnetwork
-  specs:
-    ruby-qt6-qtnetwork (2.0.0)
-      ruby-qt6-qtcore (~> 2.0.0)
-      ruby-qt6-rice (= 2.0.0)
-
-PATH
-  remote: ../ruby-qt6/qtwebenginecore
-  specs:
-    ruby-qt6-qtwebenginecore (2.0.0)
-      ruby-qt6-qtcore (~> 2.0.0)
-      ruby-qt6-qtgui (~> 2.0.0)
-      ruby-qt6-rice (= 2.0.0)
-
-PATH
-  remote: ../ruby-qt6/qtwebenginewidgets
-  specs:
-    ruby-qt6-qtwebenginewidgets (2.0.0)
-      ruby-qt6-qtcore (~> 2.0.0)
-      ruby-qt6-qtgui (~> 2.0.0)
-      ruby-qt6-qtwebenginecore (~> 2.0.0)
-      ruby-qt6-qtwidgets (~> 2.0.0)
-      ruby-qt6-rice (= 2.0.0)
-
-PATH
-  remote: ../ruby-qt6/qtwidgets
-  specs:
-    ruby-qt6-qtwidgets (2.0.0)
-      ruby-qt6-qtcore (~> 2.0.0)
-      ruby-qt6-qtgui (~> 2.0.0)
-      ruby-qt6-rice (= 2.0.0)
-
-PATH
-  remote: ../ruby-qt6/rice
-  specs:
-    ruby-qt6-rice (2.0.0)
-
-PATH
   remote: .
   specs:
     ruby-clash-systray (0.1.0)
@@ -73,8 +22,8 @@ GEM
       reline (>= 0.4.2)
     jaro_winkler (1.6.1)
     json (2.18.0)
-    kramdown (2.5.1)
-      rexml (>= 3.3.9)
+    kramdown (2.5.2)
+      rexml (>= 3.4.4)
     kramdown-parser-gfm (1.1.0)
       kramdown (~> 2.0)
     language_server-protocol (3.17.0.5)
@@ -92,7 +41,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.8.0)
+    prism (1.9.0)
     psych (5.3.1)
       date
       stringio
@@ -109,7 +58,7 @@ GEM
     regexp_parser (2.11.3)
     reline (0.6.3)
       io-console (~> 0.5)
-    reverse_markdown (3.0.1)
+    reverse_markdown (3.0.2)
       nokogiri
     rexml (3.4.4)
     rspec (3.13.2)
@@ -124,7 +73,7 @@ GEM
     rspec-mocks (3.13.7)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-support (3.13.6)
+    rspec-support (3.13.7)
     rubocop (1.82.1)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -144,7 +93,30 @@ GEM
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.47.1, < 2.0)
     ruby-progressbar (1.13.0)
-    solargraph (0.58.1)
+    ruby-qt6-qtcore (2.0.1)
+      ruby-qt6-rice (= 2.0.0)
+    ruby-qt6-qtgui (2.0.1)
+      ruby-qt6-qtcore (~> 2.0.0)
+      ruby-qt6-rice (= 2.0.0)
+    ruby-qt6-qtnetwork (2.0.1)
+      ruby-qt6-qtcore (~> 2.0.0)
+      ruby-qt6-rice (= 2.0.0)
+    ruby-qt6-qtwebenginecore (2.0.0)
+      ruby-qt6-qtcore (~> 2.0.0)
+      ruby-qt6-qtgui (~> 2.0.0)
+      ruby-qt6-rice (= 2.0.0)
+    ruby-qt6-qtwebenginewidgets (2.0.0)
+      ruby-qt6-qtcore (~> 2.0.0)
+      ruby-qt6-qtgui (~> 2.0.0)
+      ruby-qt6-qtwebenginecore (~> 2.0.0)
+      ruby-qt6-qtwidgets (~> 2.0.0)
+      ruby-qt6-rice (= 2.0.0)
+    ruby-qt6-qtwidgets (2.0.1)
+      ruby-qt6-qtcore (~> 2.0.0)
+      ruby-qt6-qtgui (~> 2.0.0)
+      ruby-qt6-rice (= 2.0.0)
+    ruby-qt6-rice (2.0.0)
+    solargraph (0.58.2)
       ast (~> 2.4.3)
       backport (~> 1.2)
       benchmark (~> 0.4)
@@ -202,13 +174,6 @@ DEPENDENCIES
   rspec
   rubocop
   ruby-clash-systray!
-  ruby-qt6-qtcore!
-  ruby-qt6-qtgui!
-  ruby-qt6-qtnetwork!
-  ruby-qt6-qtwebenginecore!
-  ruby-qt6-qtwebenginewidgets!
-  ruby-qt6-qtwidgets!
-  ruby-qt6-rice!
   solargraph
   standard
   yard
