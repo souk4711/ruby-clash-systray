@@ -7,8 +7,10 @@ module ClashSystray
       attr_reader :external_controller, :secret
 
       def self.load(file)
-        new.tap { |c| c.parse(file) }
+        new.tap { |c| c.__send__(:parse, file) }
       end
+
+      private
 
       def parse(file)
         data = YAML.load_file(file)

@@ -3,85 +3,53 @@
 module ClashSystray
   module Clash
     module Web
-      class Http
+      class Http < RubyQt6::Bando::QObject
+        q_object do
+          slot "on_reply_finished(QNetworkReply*)"
+        end
+
         def initialize(client, options)
+          super()
+
           @client = client
           @host = options.fetch(:host)
           @port = options.fetch(:port)
-          @options = options.fetch(:options)
+
+          @on_reply_success = {}
+          @manager = QNetworkAccessManager.new
+          @manager.finished.connect(self, :on_reply_finished)
         end
 
         def get(path, options = {})
-          request(:get, path, options)
+          url = QUrl.new("http://#{@host}:#{@port}#{path}")
+          set_url_query(url, options[:params])
+
+          request = QNetworkRequest.new
+          request.set_url(url)
+          request.set_raw_header("Authorization", "Bearer #{@client.secret}")
+
+          reply = @manager.get(request)
+          @on_reply_success[reply._qobject_ptr] = options[:on_success]
         end
 
         private
 
-        def request(verb, path, options)
-          uri = uri_for(path)
+        def set_url_query(url, params)
+          return if params.nil?
 
-          options[:headers] = (options[:headers] || {}).merge({
-            "Authorization" => "Bearer #{@client.secret}"
-          })
-
-          begin
-            response = http(@options).request(verb, uri, options)
-          rescue HTTP::Error => e
-            raise Exceptions::Error, e.message
-          end
-
-          parse_response(response) do |parse_as, result|
-            case parse_as
-            when :json
-              break result if result["message"].nil?
-              raise Exceptions::Error, result["message"]
-            else
-              result
-            end
-          end
+          query = QUrlQuery.new
+          params.each { |k, v| query.add_query_item(k.to_qstr, v) }
+          url.set_query(query)
         end
 
-        def uri_for(path)
-          uri_options = {scheme: "http", host: @host, port: @port, path: path}
-          Addressable::URI.new(uri_options)
-        end
+        def on_reply_finished(reply)
+          on_success = @on_reply_success.delete(reply._qobject_ptr)
+          return unless reply.error == QNetworkReply::NoError
 
-        def http(options)
-          HTTP::Client.new(HTTP::Options.new(options))
-        end
-
-        def parse_response(response)
-          content_type = response.headers[:content_type]
-          parse_as = {
-            %r{^application/json} => :json,
-            %r{^text/plain} => :plain
-          }.each_with_object([]) { |match, memo| memo << match[1] if content_type&.match?(match[0]) }.first || :plain
-
-          if parse_as == :plain
-            result = begin
-              parse_json_response(response)
-            rescue
-              nil
-            end
-            if result
-              return yield(:json, result)
-            else
-              return yield(:plain, response.body)
-            end
-          end
-
-          result = case parse_as
-          when :json
-            parse_json_response(response)
-          else
-            response.body
-          end
-
-          yield(parse_as, result)
-        end
-
-        def parse_json_response(response)
-          JSON.parse(response.body.to_s)
+          body = reply.read_all.to_s
+          on_success.call(JSON.parse(body))
+        ensure
+          reply.delete_later
         end
       end
     end

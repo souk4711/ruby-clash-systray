@@ -8,7 +8,8 @@ gemspec
 # ruby-qt6
 %w[
   rice
-  qtcore qtgui qtwidgets
+  qtcore qtgui qtwidgets qtnetwork
+  qtwebenginecore qtwebenginewidgets
 ].each do |lib|
   gem "ruby-qt6-#{lib}", path: "../ruby-qt6/#{lib}"
 end

@@ -3,8 +3,8 @@
 module ClashSystray
   class Systray < RubyQt6::Bando::QWidget
     q_object do
-      slot "perform_open_dashboard_action()"
-      slot "perform_export_env_action()"
+      slot "on_open_dashboard_action_triggered()"
+      slot "on_export_env_action_triggered()"
     end
 
     def initialize
@@ -23,61 +23,52 @@ module ClashSystray
 
     def create_actions
       @open_dashboard_action = QAction.new("Dashboard", self)
-      @open_dashboard_action.triggered.connect(self, :perform_open_dashboard_action)
-
-      create_selector_actions
+      @open_dashboard_action.triggered.connect(self, :on_open_dashboard_action_triggered)
 
       @export_env_action = QAction.new("Export Env", self)
-      @export_env_action.triggered.connect(self, :perform_export_env_action)
+      @export_env_action.triggered.connect(self, :on_export_env_action_triggered)
 
       @quit_action = QAction.new("Quit", self)
       @quit_action.triggered.connect($qApp, :quit)
-    end
-
-    def create_selector_actions
-      return if @selector_actions_data
-
-      selectors = Clash.api.proxies["proxies"].filter { |_, v| v["hidden"] == false }
-      @selector_actions_data = selectors.map do |_, v|
-        create_selector_action(v)
-      end
-    end
-
-    def create_selector_action(data)
-      action = QAction.new(data["name"], self)
-
-      proxy_actions_data = data["all"].map do |proxy_name|
-        proxy_action = QAction.new(proxy_name, self)
-        proxy_action.set_checkable(true)
-        proxy_action.set_checked(data["now"] == proxy_name)
-        {action: proxy_action}
-      end
-
-      {action:, proxy_actions_data:}
     end
 
     def create_menus
       @menu = QMenu.new("", self)
       @menu.add_action(@open_dashboard_action)
 
-      @menu.add_separator
-      @selector_actions_data.each do |selector_action_data|
-        action = selector_action_data[:action]
-        @menu.add_action(action)
-
-        action_menu = QMenu.new("", self)
-        selector_action_data[:proxy_actions_data].each do |proxy_action_data|
-          proxy_action = proxy_action_data[:action]
-          action_menu.add_action(proxy_action)
-        end
-        action.set_menu(action_menu)
-      end
-
-      @menu.add_separator
+      @separator = @menu.add_separator
       @menu.add_action(@export_env_action)
 
       @menu.add_separator
       @menu.add_action(@quit_action)
+
+      create_menus_selectors
+    end
+
+    def create_menus_selectors
+      @selectors_actions = []
+      @proxies_actions = []
+
+      Clash.api.proxies(on_success: ->(data) {
+        selectors = data["proxies"].filter { |_, v| v["hidden"] == false }
+        selectors.each do |_, selector_data|
+          action = QAction.new(selector_data["name"])
+          @selectors_actions << action
+
+          action_menu = QMenu.new("", self)
+          action.set_menu(action_menu)
+
+          selector_data["all"].each do |proxy_name|
+            proxy_action = action_menu.add_action(proxy_name)
+            proxy_action.set_checkable(true)
+            proxy_action.set_checked(selector_data["now"] == proxy_name)
+            @proxies_actions << proxy_action
+          end
+        end
+
+        @menu.insert_separator(@separator)
+        @selectors_actions.each { |action| @menu.insert_action(@separator, action) }
+      })
     end
 
     def create
@@ -86,12 +77,12 @@ module ClashSystray
       @systray.set_context_menu @menu
     end
 
-    def perform_export_env_action
+    def on_export_env_action_triggered
       action = ExportEnvAction.new
       action.perform
     end
 
-    def perform_open_dashboard_action
+    def on_open_dashboard_action_triggered
       action = OpenDashboardAction.new
       action.perform
     end

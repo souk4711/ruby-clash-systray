@@ -12,17 +12,11 @@ module ClashSystray
 
         def initialize(options)
           @secret = options.fetch(:secret)
-          @http = Http.new(
-            self,
-            host: options.fetch(:host), port: options.fetch(:port),
-            options: options[:http] || {}
-          )
+          @http = Http.new(self, host: options.fetch(:host), port: options.fetch(:port))
         end
 
         def api
-          @api ||= Struct.new(:client) do
-            include ::ClashSystray::Clash::Web::API
-          end.new(self)
+          @api ||= API.new(self)
         end
       end
     end
