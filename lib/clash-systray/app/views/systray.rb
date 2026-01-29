@@ -98,7 +98,7 @@ module ClashSystray
       return unless checked
 
       group = sender.parent.menu_action.text
-      proxy = sender.text.to_s.split("|")[0].strip
+      proxy = sender.text.to_s.split(" | ")[0].strip
       Clash.api.PUT_proxies(group, proxy, on_success: ->(_) {})
     end
 
@@ -106,7 +106,7 @@ module ClashSystray
       @selectors_actions.each do |action|
         Clash.api.GET_group_delay(action.text, on_success: ->(data) {
           @proxies_actions.each do |proxy_action|
-            proxy_name = proxy_action.text.to_s.split("|")[0].strip
+            proxy_name = proxy_action.text.to_s.split(" | ")[0].strip
             proxy_delay = data[proxy_name]
             proxy_action.set_text("#{proxy_name} | #{proxy_delay} ms") if proxy_delay
           end
