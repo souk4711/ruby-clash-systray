@@ -73,7 +73,7 @@ module ClashSystray
 
     def create
       @systray = QSystemTrayIcon.new(self)
-      @systray.set_icon QIcon.from_theme(QIcon::ThemeIcon::MailForward)
+      @systray.set_icon QIcon.new("/usr/share/icons/Colloid-Light/apps/scalable/clash.svg")
       @systray.set_context_menu @menu
     end
 
