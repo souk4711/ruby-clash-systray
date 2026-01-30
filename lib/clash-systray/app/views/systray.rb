@@ -98,20 +98,29 @@ module ClashSystray
       return unless checked
 
       group = sender.parent.menu_action.text
-      proxy = sender.text.to_s.split(" | ")[0].strip
+      proxy = h_strip_proxy_name(sender.text)
       Clash.api.PUT_proxies(group, proxy, on_success: ->(_) {})
     end
 
     def on_systray_menu_about_to_show
+      @proxies_actions.each do |proxy_action|
+        proxy_name = h_strip_proxy_name(proxy_action.text)
+        proxy_action.set_text(proxy_name)
+      end
+
       @selectors_actions.each do |action|
         Clash.api.GET_group_delay(action.text, on_success: ->(data) {
           @proxies_actions.each do |proxy_action|
-            proxy_name = proxy_action.text.to_s.split(" | ")[0].strip
+            proxy_name = h_strip_proxy_name(proxy_action.text)
             proxy_delay = data[proxy_name]
             proxy_action.set_text("#{proxy_name} | #{proxy_delay} ms") if proxy_delay
           end
         })
       end
+    end
+
+    def h_strip_proxy_name(name)
+      name.to_s.split(" | ")[0].strip
     end
   end
 end
