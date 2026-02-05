@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "config"
 require_relative "lib"
 
 require_relative "app/actions"
