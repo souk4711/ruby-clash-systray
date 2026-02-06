@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "config"
 require_relative "lib"
 
 require_relative "app/actions"
@@ -12,8 +13,6 @@ module ClashSystray
     end
 
     def initialize
-      QApplication.set_application_name("ClashSystray")
-
       @app = QApplication.new
       @systray = Systray.new
     end
