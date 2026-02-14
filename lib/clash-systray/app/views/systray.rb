@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module ClashSystray
   class Systray < RubyQt6::Bando::QWidget
     q_object do

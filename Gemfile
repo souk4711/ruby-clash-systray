@@ -5,6 +5,7 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in clash-systray.gemspec
 gemspec
 
+# ruby-qt6
 %w[
   qtcore qtgui qtwidgets qtnetwork
   qtwebenginecore qtwebenginewidgets

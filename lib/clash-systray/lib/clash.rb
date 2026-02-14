@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative "clash/config"
 require_relative "clash/web"
 
