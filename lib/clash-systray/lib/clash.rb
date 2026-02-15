@@ -3,7 +3,7 @@ require_relative "clash/web"
 
 module ClashSystray
   module Clash
-    CONFIG_FILE = "/home/johndoe/.local/share/clash/config.yaml"
+    CONFIG_FILE = QDir.home.file_path(".local/share/clash/config.yaml")
 
     def self.api
       @api ||= Web::Client.new(
