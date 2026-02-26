@@ -78,7 +78,7 @@ module ClashSystray
 
     def create
       @systray = QSystemTrayIcon.new(self)
-      @systray.set_icon(QIcon.from_theme("clash"))
+      @systray.set_icon(QApplication.window_icon)
       @systray.set_context_menu @menu
     end
 
