@@ -7,6 +7,7 @@ gemspec
 
 # ruby-qt6
 %w[
+  rice
   qtcore qtgui qtwidgets qtnetwork
   qtwebenginecore qtwebenginewidgets
 ].each do |lib|
