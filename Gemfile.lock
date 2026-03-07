@@ -52,7 +52,7 @@ PATH
 PATH
   remote: .
   specs:
-    ruby-clash-systray (1.0.1)
+    ruby-clash-systray (1.0.2)
       ruby-qt6-qtnetwork (~> 6.0.0)
       ruby-qt6-qtwebenginewidgets (~> 6.0.0)
       ruby-qt6-qtwidgets (~> 6.0.0)
