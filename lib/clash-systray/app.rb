@@ -16,6 +16,8 @@ module ClashSystray
     end
 
     def exec
+      Contrib::SigHandler.new(@app)
+
       @systray.show
       @app.exec
     end
