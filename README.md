@@ -9,16 +9,16 @@ A simple system tray for Clash on Linux.
 
 ## Installation
 
-```console
-$ gem install ruby-clash-systray
+```sh
+gem install ruby-clash-systray
 ```
 
 ## Usage
 
 To launch the GUI:
 
-```console
-$ clash-systray
+```sh
+clash-systray
 ```
 
 ## License
