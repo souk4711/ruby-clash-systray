@@ -82,13 +82,13 @@ class Systray < RubyQt6::Bando::QWidget
   end
 
   def on_open_dashboard_action_triggered
-    action = OpenDashboardAction.new
-    action.perform
+    srv = OpenDashboardService.new
+    srv.perform
   end
 
   def on_export_env_action_triggered
-    action = ExportEnvAction.new
-    action.perform
+    srv = ExportEnvService.new
+    srv.perform
   end
 
   def on_proxy_action_toggled(checked)

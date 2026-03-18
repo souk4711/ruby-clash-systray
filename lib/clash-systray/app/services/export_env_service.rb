@@ -1,4 +1,4 @@
-class ExportEnvAction
+class ExportEnvService
   def perform
     config = Clash.config
     http_proxy = "http://127.0.0.1:#{config.port}"

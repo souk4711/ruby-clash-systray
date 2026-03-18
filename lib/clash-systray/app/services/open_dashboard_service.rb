@@ -1,4 +1,4 @@
-class OpenDashboardAction
+class OpenDashboardService
   def perform
     config = Clash.config
     port = config.external_controller.split(":")[1]
