@@ -2,7 +2,7 @@ module Clash
   module Web
     class Http < RubyQt6::Bando::QObject
       q_object do
-        slot "on_reply_finished(QNetworkReply*)"
+        slot "_on_reply_finished(QNetworkReply*)"
       end
 
       def initialize(client, options)
@@ -14,7 +14,7 @@ module Clash
 
         @on_reply_success = {}
         @manager = QNetworkAccessManager.new
-        @manager.finished.connect(self, :on_reply_finished)
+        @manager.finished.connect(self, :_on_reply_finished)
       end
 
       def get(path, options = {})
@@ -51,7 +51,7 @@ module Clash
         url.set_query(query)
       end
 
-      def on_reply_finished(reply)
+      def _on_reply_finished(reply)
         on_success = @on_reply_success.delete(reply._qobject_ptr)
         return if reply.error != QNetworkReply::NoError
 
