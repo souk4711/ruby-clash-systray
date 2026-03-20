@@ -1,3 +1,5 @@
+require_relative "systray/helpers"
+
 class Systray < RubyQt6::Bando::QWidget
   q_object do
     slot "_on_systray_menu_about_to_show()"
@@ -78,22 +80,21 @@ class Systray < RubyQt6::Bando::QWidget
     })
   end
 
-  def h_strip_proxy_name(name)
-    name.to_s.split(" | ")[0].strip
-  end
-
   def _on_systray_menu_about_to_show
     @proxies_actions.each do |proxy_action|
-      proxy_name = h_strip_proxy_name(proxy_action.text)
+      proxy_name = Helpers.extract_proxy_name(proxy_action.text)
       proxy_action.set_text(proxy_name)
     end
 
     @selectors_actions.each do |action|
       Clash.api.GET_group_delay(action.text, on_success: ->(data) {
         @proxies_actions.each do |proxy_action|
-          proxy_name = h_strip_proxy_name(proxy_action.text)
+          proxy_name = Helpers.extract_proxy_name(proxy_action.text)
           proxy_delay = data[proxy_name]
-          proxy_action.set_text("#{proxy_name} | #{proxy_delay} ms") if proxy_delay
+          next unless proxy_delay
+
+          text = Helpers.inject_proxy_name(proxy_name, "#{proxy_delay} ms")
+          proxy_action.set_text(text)
         end
       })
     end
@@ -113,7 +114,7 @@ class Systray < RubyQt6::Bando::QWidget
     return unless checked
 
     group = sender.parent.menu_action.text
-    proxy = h_strip_proxy_name(sender.text)
+    proxy = Helpers.extract_proxy_name(sender.text)
     Clash.api.PUT_proxies(group, proxy, on_success: ->(_) {})
   end
 end
