@@ -21,6 +21,10 @@ To launch the GUI:
 clash-systray
 ```
 
+## Screenshot
+
+![screenshot](https://github.com/souk4711/ruby-clash-systray/raw/main/misc/screenshots/systray.png)
+
 ## License
 
 Licensed under the [GPL-3.0-only](./LICENSE).
