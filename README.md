@@ -6,6 +6,10 @@ A simple system tray for Clash on Linux.
 
 - [Ruby](https://www.ruby-lang.org/)
 - [Qt](https://www.qt.io/)
+- [Clash](https://github.com/MetaCubeX/mihomo)
+- **the config file should be located at one of the following paths**
+    - ~/.local/share/clash/config.yaml
+    - ~/.config/clash/config.yaml
 
 ## Installation
 
