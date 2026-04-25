@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "bundler/gem_tasks"
+_ = Gem::Specification.load("clash-systray.gemspec")
+
 require "rubocop/rake_task"
 RuboCop::RakeTask.new
 
