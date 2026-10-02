@@ -1,4 +1,4 @@
-# ClashSystray
+# RubyClashSystray
 
 A simple system tray for Clash on Linux.
 
@@ -22,7 +22,7 @@ gem install ruby-clash-systray
 To launch the GUI:
 
 ```sh
-clash-systray
+ruby-clash-systray
 ```
 
 ## Screenshot
