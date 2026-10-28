@@ -4,5 +4,5 @@ QApplication.set_application_name("ClashSystray")
 root_path = File.expand_path("../..", __dir__)
 QDir.add_search_path("assets", File.join(root_path, "app/assets"))
 
-icon = QIcon.new("assets:/app.svg")
+icon = QIcon.from_theme("clash")
 QApplication.set_window_icon(icon)
