@@ -16,7 +16,8 @@ module ClashSystray
     end
 
     def exec
-      Contrib::SigHandler.new(@app)
+      handler = Ctrlc::Handler.new
+      handler.exec
 
       @systray.show
       @app.exec
