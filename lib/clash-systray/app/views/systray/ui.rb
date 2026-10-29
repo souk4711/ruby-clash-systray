@@ -1,6 +1,12 @@
 class Systray < RubyQt6::Bando::QWidget
   private
 
+  def initialize_ui
+    initialize_actions
+    initialize_menu
+    initialize_tray
+  end
+
   def initialize_actions
     @open_dashboard_action = QAction.new("Dashboard", self)
     @open_dashboard_action.triggered.connect(self, :_on_open_dashboard_action_triggered)

@@ -11,10 +11,7 @@ class Systray < RubyQt6::Bando::QWidget
 
   def initialize
     super
-
-    initialize_actions
-    initialize_menu
-    initialize_tray
+    initialize_ui
   end
 
   def show
