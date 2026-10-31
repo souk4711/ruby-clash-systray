@@ -67,18 +67,18 @@ class Systray < RubyQt6::Bando::QWidget
 
   def update_proxies_actions_delayinfo
     @proxies_actions.each do |proxy_action|
-      proxy_name = Helpers.extract_proxy_name(proxy_action.text)
+      proxy_name = hlpr_extract_proxy_name(proxy_action.text)
       proxy_action.set_text(proxy_name)
     end
 
     @selectors_actions.each do |action|
       Clash.api.GET_group_delay(action.text, on_success: ->(data) {
         @proxies_actions.each do |proxy_action|
-          proxy_name = Helpers.extract_proxy_name(proxy_action.text)
+          proxy_name = hlpr_extract_proxy_name(proxy_action.text)
           proxy_delay = data[proxy_name]
           next unless proxy_delay
 
-          text = Helpers.inject_proxy_name(proxy_name, "#{proxy_delay} ms")
+          text = hlpr_inject_proxy_name(proxy_name, "#{proxy_delay} ms")
           proxy_action.set_text(text)
         end
       })

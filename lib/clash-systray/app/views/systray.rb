@@ -11,6 +11,7 @@ class Systray < RubyQt6::Bando::QWidget
 
   def initialize
     super
+
     initialize_ui
   end
 
@@ -38,7 +39,7 @@ class Systray < RubyQt6::Bando::QWidget
     return unless checked
 
     group = sender.parent.menu_action.text
-    proxy = Helpers.extract_proxy_name(sender.text)
+    proxy = hlpr_extract_proxy_name(sender.text)
     Clash.api.PUT_proxies(group, proxy, on_success: ->(_) {})
   end
 end
